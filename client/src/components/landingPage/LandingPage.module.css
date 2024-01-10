@@ -1,0 +1,84 @@
+/* .containerButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+  width: 250px;
+} */
+
+.button {
+  height: 50px;
+  width: 100px;
+}
+
+.landing {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  position: relative;
+  inset: 0 0 0 0;
+  align-content: center;
+  justify-content: center;
+  flex-wrap: nowrap;
+}
+
+.hueso {
+  height: 150px;
+  transition: transform 0.5s ease;
+}
+
+.h3 {
+  color: #513c21;
+  margin-left: 148px;
+  transition: transform 0.5s ease, z-index 0s ease 0.5s;
+  top: 57px;
+  position: relative;
+  z-index: 1;
+  font-weight: 900;
+  font-size: 25px;
+}
+
+body {
+  background-image: url(../../assets/fondoLanding.png);
+  background-size: cover;
+  background-attachment: fixed;
+  background-position: center;
+  height: 100%;
+  width: 100%;
+  margin: 0;
+}
+.a {
+  height: 56px;
+  align-items: center;
+  display: flex;
+  transition: transform 0.5s ease;
+  background-color: transparent;
+  position: relative;
+  left: 65px;
+}
+/* 
+.containerButton:hover .hueso {
+  transform: translateX(
+    20px
+  ); /* Mueve el hueso hacia la derecha al hacer hover */
+/* } */
+/* /
+.containerButton:hover .h3 {
+  transform: translateX(
+    -20px
+  ); Mueve el texto hacia la izquierda al hacer hover 
+} */
+
+.containerButton {
+  transition: 70ms ease-in-out;
+}
+
+.containerButton:hover {
+  transform: scale(1.05);
+  transition: 70ms ease-in;
+}
+
+.Navlink {
+  text-decoration: none;
+}

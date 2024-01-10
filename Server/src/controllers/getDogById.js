@@ -1,27 +1,51 @@
 const axios = require("axios");
+const { Dog } = require("../db"); // Asegúrate de que esta ruta sea correcta
+const API_KEY = process.env.API_KEY;
 
 const getDogById = async (req, res) => {
-  const { idRaza } = req.params;
-  const URL = `https://api.thedogapi.com/v1/breeds/${idRaza}`;
+  const idRaza = req.params.idRaza;
+  const URL = `https://api.thedogapi.com/v1/breeds/${idRaza}?api_key=${API_KEY}`;
+  let breed;
 
   try {
     const response = await axios.get(URL);
-    const dogDetails = {
-      id: response.data.id,
-      name: response.data.name,
-      bred_for: response.data.bred_for,
-      breed_group: response.data.breed_group,
-      life_span: response.data.life_span,
-      temperament: response.data.temperament,
-      origin: response.data.origin,
-      reference_image_id: response.data.reference_image_id,
-    };
+    breed = response.data;
 
-    res.json(dogDetails);
+    const dogFromDb = await Dog.findOne({ where: { id: idRaza } });
+    if (dogFromDb) {
+      breed = dogFromDb;
+    } else {
+      res.status(404).json({ message: "No breed found" });
+      return;
+    }
   } catch (error) {
-    console.error("Error fetching dog details:", error.message);
-    res.status(500).json({ error: "Internal Server Error" });
+    console.error("Error fetching dog breed:", error.message);
+
+    // Buscar en la base de datos si no se encuentra en la API
   }
+
+  res.json(breed);
 };
 
 module.exports = getDogById;
+
+// try {
+//   const response = await axios.get(URL);
+//   breed = response.data;
+//   const { name, origin, temperament } = breed;
+//   luchito = { name, origin, temperament };
+// } catch (error) {
+//   console.error("Error fetching dog breed:", error.message);
+
+// Buscar en la base de datos si no se encuentra en la API
+// const dogFromDb = await Dogs.findOne({ where: { id: idRaza } });
+
+// if (dogFromDb) {
+//   breed = dogFromDb;
+// } else {
+//   res.status(404).json({ message: "No breed found" });
+//   return;
+// }
+// }
+
+// res.json(luchito);

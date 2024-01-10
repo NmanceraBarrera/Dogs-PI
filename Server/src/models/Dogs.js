@@ -1,13 +1,13 @@
 const { DataTypes } = require("sequelize");
 
 module.exports = (sequelize) => {
-  sequelize.define(
+  const Dog = sequelize.define(
     "Dog",
     {
       id: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.UUID,
+        defaultValue: DataTypes.UUIDV4,
         primaryKey: true,
-        autoIncrement: true,
         allowNull: false,
       },
       imagen: {
@@ -36,4 +36,5 @@ module.exports = (sequelize) => {
       timestamps: false,
     }
   );
+  return Dog;
 };
