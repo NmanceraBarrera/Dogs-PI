@@ -23,20 +23,15 @@
   flex-wrap: nowrap;
 }
 
-.hueso {
-  height: 150px;
-  transition: transform 0.5s ease;
-}
-
 .h3 {
-  color: #513c21;
-  margin-left: 148px;
+  color: #000000;
+
   transition: transform 0.5s ease, z-index 0s ease 0.5s;
   top: 57px;
   position: relative;
   z-index: 1;
   font-weight: 900;
-  font-size: 25px;
+  font-size: 50px;
 }
 
 body {

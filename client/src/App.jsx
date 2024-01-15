@@ -1,37 +1,80 @@
 import axios from "axios";
 import React, { useEffect } from "react";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import LandingPage from "./components/landingPage/landingPage";
 import Homepage from "./components/homePage/Homepage";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllDogsAction } from "../src/redux/action";
+import {
+  filterDog,
+  filterDogsbyTemperament,
+  getAllDogsAction,
+  searchDogByName,
+} from "../src/redux/action";
+import Detail from "./components/detail/Detail";
+import SearchBar from "./components/SearchBar/SearchBar";
+import FormCreate from "./components/Formulariocrear/FormCreate";
+import Nav from "./components/Navbar/Nav";
 
 function App() {
-  const myDogs = useSelector((state) => state.myDogs);
-
   const dispatch = useDispatch();
+  const myDogs = useSelector((state) => state.myDogs);
+  const allDogs = useSelector((state) => state.searchDogName);
+  const temps = useSelector((state) => state.searchTemperaments); //? => llamo el estado Global searchTemperaments
+
+  const navigate = useNavigate();
+
+  const onClick = (id) => {
+    navigate(`/dogs/${id}`);
+  };
+  const onClickCreate = (id) => {
+    navigate(`/dogs`);
+  };
+
+  const onSearch = (searchTrim) => {
+    dispatch(searchDogByName(searchTrim));
+  };
 
   useEffect(() => {
-    const Dogs = async () => {
-      const URL = "http://localhost:3001/dogs";
-      try {
-        const { data } = await axios.get(URL);
-
-        if (data) {
-          dispatch(getAllDogsAction(data));
-        }
-      } catch (error) {
-        console.error("Error al realizar la solicitud:", error.message);
-      }
-    };
-    Dogs();
+    dispatch(getAllDogsAction()); //! ACA LLAMO LOS CANCHOSOS
+    dispatch(filterDog());
   }, []);
+
+  const filterDogsByTemp = (dogTemp) => {
+    dispatch(filterDogsbyTemperament(dogTemp));
+  };
 
   return (
     <React.Fragment>
+      {location.pathname !== "/" && (
+        <Nav
+          myDogs={myDogs}
+          onSearch={onSearch}
+          temps={temps}
+          filterDogsByTemp={filterDogsByTemp}
+        />
+      )}
       <Routes>
         <Route path="/" element={<LandingPage />} />
-        <Route path="/home" element={<Homepage myDogs={myDogs} />} />
+        <Route
+          path="/home"
+          element={
+            <Homepage
+              onClick={onClick}
+              myDogs={myDogs}
+              allDogs={allDogs}
+              onSearch={onSearch}
+              temps={temps}
+              filterDogsByTemp={filterDogsByTemp}
+            />
+          }
+        />
+        <Route path="/dogs/:id" element={<Detail {...myDogs} />} />
+        <Route path="/dogs/name" element={<SearchBar {...myDogs} />} />
+        {/* <Route path="/dogs/name" element={<Filterbyname {...myDogs} />} /> */}
+        <Route
+          path="/createdog"
+          element={<FormCreate onClickCreate={onClickCreate} temps={temps} />}
+        />
       </Routes>
     </React.Fragment>
   );

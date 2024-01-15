@@ -5,11 +5,15 @@ import {
   POST_DOG,
   FILTER_BY_APIDB,
   ORDER_BYWEIGTH,
+  SEARCH_DOG,
+  FILTER_DOGS_BYTEMP,
 } from "./actions-types";
 
 const initialState = {
   myDogs: [],
   allDogs: [],
+  searchDogName: [],
+  searchTemperaments: [],
 };
 //! ////////////////////////////////////////////////////////////////////////
 const reducer = (state = initialState, { type, payload }) => {
@@ -30,19 +34,27 @@ const reducer = (state = initialState, { type, payload }) => {
     //! ////////////////////////////////////////////////////////////////////////
 
     case FILTER_DOG:
-      if (payload === "All") {
-        return {
-          ...state,
-          myDogs: state.allDogs,
-        };
-      }
-
-      const filteredTemperamentos = state.allDogs.filter(
-        (dog) => dog.temperamentos === payload
-      );
+      // if (payload === "Select Temperament...") {
       return {
         ...state,
-        myDogs: filteredTemperamentos,
+        searchTemperaments: payload,
+      };
+    // } else {
+    //   const filteredDogs = state.allDogs.filter((dog) => {
+    //     return dog.temperament && dog.temperament.includes(payload);
+    //   });
+
+    //   return {
+    //     ...state,
+    //     myDogs: filteredDogs,
+
+    //   };
+    // }
+    //! /////////////////////////////////////////////////////////////////////
+    case SEARCH_DOG: //? ///// lo uso para searchdogbyname
+      return {
+        ...state,
+        searchDogName: payload,
       };
 
     //! ///////////////////////////////////////////////////////////////////////
@@ -70,10 +82,14 @@ const reducer = (state = initialState, { type, payload }) => {
           myDogs: filteredDb,
         };
       }
+      console.log(myDogs, "aasdhjasdjahsdj");
 
     //! ////////////////////////////////////////////////////////////////////////
     case ORDER_DOG:
       const orderCopy = [...state.myDogs];
+      if (payload === "Alphabetic Order") {
+        orderCopy;
+      }
       if (payload === "A") {
         orderCopy.sort((a, b) => a.id - b.id);
       }
@@ -88,16 +104,27 @@ const reducer = (state = initialState, { type, payload }) => {
     case ORDER_BYWEIGTH:
       const orderCopyWeigth = [...state.myDogs];
       if (payload === "WEIGTH ⬇") {
-        orderCopy.sort((a, b) => b.weigth.localeCompare(a.weigth));
+        orderCopyWeigth.sort((a, b) => b.weight - a.weight);
       }
       if (payload === "WEIGTH ⬆") {
-        orderCopy.sort((a, b) => a.weigth.localeCompare(b.weigth));
+        orderCopyWeigth.sort((a, b) => a.weight - b.weight);
       }
 
       return {
         ...state,
         myDogs: orderCopyWeigth,
       };
+
+    //? ///////////////////////////////////////////////
+    case FILTER_DOGS_BYTEMP:
+      return {
+        ...state,
+        myDogs: payload,
+        allDogs: payload,
+      };
+
+    //? ////////////////////////////////////////////////
+
     default:
       return { ...state };
   }

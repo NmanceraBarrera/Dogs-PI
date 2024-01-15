@@ -1,0 +1,85 @@
+.cardContainer {
+  background: transparent;
+  backdrop-filter: blur(60px);
+  width: 310px;
+  height: 380px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  border-radius: 20px;
+  box-sizing: border-box;
+  transition: transform 0.3s;
+  position: relative;
+  perspective: 1000px;
+  -webkit-box-shadow: 16px 13px 33px -11px rgba(105, 101, 105, 1);
+  -moz-box-shadow: 16px 13px 33px -11px rgba(105, 101, 105, 1);
+  box-shadow: 16px 13px 33px -11px rgba(105, 101, 105, 1); /* Establece la perspectiva para el giro 3D */
+}
+
+.imgs {
+  width: 250px;
+  height: 210px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+h2 {
+  font-size: 17px;
+  margin: 0;
+  margin-top: 5px;
+  display: flex;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+}
+h3 {
+  width: 300px;
+  font-size: 7px;
+  margin: 0;
+  margin-top: 5px;
+  display: flex;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+}
+
+.temperamentsContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+.temperamentItem {
+  font-size: 14px;
+  /* background-color: #e0c8c9; */
+  text-shadow: 2px 2px 2px #d68383; /* Añade una sombra al texto */
+}
+
+.text {
+  height: 100px;
+  gap: 10px;
+  display: flex;
+  flex-direction: column;
+}
+.texth2 {
+  text-align: center;
+  width: 246px;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+}
+
+.weight {
+  background: #e89f9f;
+  height: 50px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  top: 326px;
+  right: 0px;
+  border-radius: 0 0 20px 20px;
+  align-items: center;
+}

@@ -2,13 +2,21 @@ const { Dog } = require("../db"); // Asegúrate de que esta ruta sea correcta
 
 const createDog = async (req, res) => {
   try {
-    const { imagen, name, alturaCm, peso, añosVida } = req.body;
-    const newDog = await Dog.create({
-      imagen,
+    const {
+      image,
       name,
-      alturaCm,
-      peso,
-      añosVida,
+      height,
+      weight,
+      lifespan,
+      temperament = [],
+    } = req.body;
+    const newDog = await Dog.create({
+      image,
+      name,
+      height,
+      weight,
+      lifespan,
+      temperament,
     });
 
     res.status(200).json(newDog);

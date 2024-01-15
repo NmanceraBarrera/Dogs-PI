@@ -23,9 +23,7 @@ function LandingPage() {
           <h2 className={style.h3}>
             Entrar <GiJumpingDog />
           </h2>
-          <div className={style.a}>
-            <img src={hueso} alt="huesito" className={style.hueso} />
-          </div>
+          <div className={style.a}></div>
         </div>
       </NavLink>
     </div>

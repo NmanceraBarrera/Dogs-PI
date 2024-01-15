@@ -3,49 +3,35 @@ const { Dog } = require("../db"); // Asegúrate de que esta ruta sea correcta
 const API_KEY = process.env.API_KEY;
 
 const getDogById = async (req, res) => {
-  const idRaza = req.params.idRaza;
-  const URL = `https://api.thedogapi.com/v1/breeds/${idRaza}?api_key=${API_KEY}`;
-  let breed;
+  const { idRaza } = req.params;
+  const URL = `https://api.thedogapi.com/v1/breeds?api_key=${API_KEY}`;
 
   try {
-    const response = await axios.get(URL);
-    breed = response.data;
+    if (!isNaN(idRaza)) {
+      // Si el ID es un número, busca en la API
+      const { data } = await axios.get(URL);
+      const dogFromAPI = data.find((dog) => dog.id === parseInt(idRaza));
 
-    const dogFromDb = await Dog.findOne({ where: { id: idRaza } });
-    if (dogFromDb) {
-      breed = dogFromDb;
+      if (!dogFromAPI) {
+        res.status(404).json({ message: "No breed found" });
+        return;
+      }
+
+      res.json(dogFromAPI);
     } else {
-      res.status(404).json({ message: "No breed found" });
-      return;
+      // Si el ID es una cadena, busca en la base de datos
+      const dogFromDb = await Dog.findOne({ where: { id: idRaza } });
+
+      if (!dogFromDb) {
+        res.status(404).json({ message: "No breed found" });
+        return;
+      }
+
+      res.json(dogFromDb);
     }
   } catch (error) {
     console.error("Error fetching dog breed:", error.message);
-
-    // Buscar en la base de datos si no se encuentra en la API
   }
-
-  res.json(breed);
 };
 
 module.exports = getDogById;
-
-// try {
-//   const response = await axios.get(URL);
-//   breed = response.data;
-//   const { name, origin, temperament } = breed;
-//   luchito = { name, origin, temperament };
-// } catch (error) {
-//   console.error("Error fetching dog breed:", error.message);
-
-// Buscar en la base de datos si no se encuentra en la API
-// const dogFromDb = await Dogs.findOne({ where: { id: idRaza } });
-
-// if (dogFromDb) {
-//   breed = dogFromDb;
-// } else {
-//   res.status(404).json({ message: "No breed found" });
-//   return;
-// }
-// }
-
-// res.json(luchito);

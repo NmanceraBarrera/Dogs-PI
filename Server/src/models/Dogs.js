@@ -10,7 +10,7 @@ module.exports = (sequelize) => {
         primaryKey: true,
         allowNull: false,
       },
-      imagen: {
+      image: {
         type: DataTypes.STRING,
         allowNull: false,
       },
@@ -19,15 +19,15 @@ module.exports = (sequelize) => {
         allowNull: false,
         unique: true,
       },
-      alturaCm: {
+      height: {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      peso: {
+      weight: {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      añosVida: {
+      lifespan: {
         type: DataTypes.STRING,
         allowNull: false,
       },

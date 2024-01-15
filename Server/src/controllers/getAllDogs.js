@@ -8,10 +8,29 @@ const getAllDogs = async (req, res) => {
 
   try {
     const response = await axios.get(URL);
-    breeds = response.data;
+    data = response.data;
+
+    breeds = data.map((dog) => ({
+      id: dog.id,
+      weight: dog.weight,
+      height: dog.height,
+      name: dog.name,
+      bred_for: dog.bred_for,
+      breed_group: dog.breed_group,
+      life_span: dog.life_span,
+      temperament: dog.temperament,
+      origin: dog.origin,
+      image: dog.image.url,
+    }));
+
     const dogFromDb = await Dog.findAll();
     if (dogFromDb) {
-      breeds.push(dogFromDb);
+      for (let i = 0; i < dogFromDb.length; i++) {
+        breeds.push(dogFromDb[i]);
+      }
+      return res.json(breeds);
+    } else if (data && !dogFromDb) {
+      return res.json(breeds);
     } else {
       res.status(404).json({ message: "No breed found" });
       return;
@@ -19,7 +38,6 @@ const getAllDogs = async (req, res) => {
   } catch (error) {
     console.error("Error fetching dog breeds:", error.message);
   }
-  res.json(breeds);
 };
 
 module.exports = getAllDogs;
