@@ -1,18 +1,15 @@
 const axios = require("axios");
-const { Dog } = require("../db");
+const { Dog, Temperament } = require("../db");
 const API_KEY = process.env.API_KEY;
 
 const getAllDogs = async (req, res) => {
   const URL = `https://api.thedogapi.com/v1/breeds?api_key=${API_KEY}`;
-  let breeds;
 
   try {
-    const response = await axios.get(URL);
-    data = response.data;
-
-    breeds = data.map((dog) => ({
+    const apiResponse = await axios.get(URL);
+    const apiDogs = apiResponse.data.map((dog) => ({
       id: dog.id,
-      weight: dog.weight,
+      weight: dog.weight.metric,
       height: dog.height,
       name: dog.name,
       bred_for: dog.bred_for,
@@ -23,20 +20,22 @@ const getAllDogs = async (req, res) => {
       image: dog.image.url,
     }));
 
-    const dogFromDb = await Dog.findAll();
-    if (dogFromDb) {
-      for (let i = 0; i < dogFromDb.length; i++) {
-        breeds.push(dogFromDb[i]);
-      }
-      return res.json(breeds);
-    } else if (data && !dogFromDb) {
-      return res.json(breeds);
-    } else {
-      res.status(404).json({ message: "No breed found" });
-      return;
-    }
+    const dbDogs = await Dog.findAll({
+      include: [
+        {
+          model: Temperament,
+          attributes: ["name"],
+          through: { attributes: [] },
+        },
+      ],
+    });
+
+    const mergedDogs = [...apiDogs, ...dbDogs];
+
+    res.json(mergedDogs);
   } catch (error) {
     console.error("Error fetching dog breeds:", error.message);
+    res.status(500).json({ message: "Internal Server Error" });
   }
 };
 

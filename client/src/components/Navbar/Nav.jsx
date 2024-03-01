@@ -15,7 +15,7 @@ function Nav({ myDogs, onSearch, temps, filterDogsByTemp }) {
       />
 
       <NavLink to="/createdog">
-        <button>Create Dog</button>
+        <button className={style.button}>Create Dog</button>
       </NavLink>
 
       <Order />

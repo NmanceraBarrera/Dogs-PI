@@ -9,11 +9,13 @@ import {
   ORDER_BYWEIGTH,
   SEARCH_DOG,
   FILTER_DOGS_BYTEMP,
+  DELETE_TEMPERAMENT,
 } from "./actions-types";
+const URL_API = import.meta.env.VITE_URL_API;
 
 export const getAllDogsAction = () => {
   try {
-    const endpoint = "http://localhost:3001/dogs";
+    const endpoint = `${URL_API}/dogs`;
     return async (dispatch) => {
       const { data } = await axios.get(endpoint);
       return dispatch({
@@ -33,17 +35,17 @@ export const orderDog = (order) => {
   };
 };
 
-export const orderDogByWeigth = (weigth) => {
+export const orderDogByWeigth = (weight) => {
   return {
     type: ORDER_BYWEIGTH,
-    payload: weigth,
+    payload: weight,
   };
 };
 
 export const filterDog = () => {
   return (dispatch) => {
     axios
-      .get(`http://localhost:3001/temperaments`)
+      .get(`${URL_API}/temperaments`)
       .then(({ data }) => {
         return dispatch({
           type: FILTER_DOG,
@@ -65,7 +67,7 @@ export const filterDogByAPIDB = (id) => {
 
 export const createDog = (dog) => {
   console.log(dog, "esto es lo que recibe mi action dog");
-  const endpoint = "http://localhost:3001/dogs";
+  const endpoint = `${URL_API}/dogs`;
   return async (dispatch) => {
     try {
       const { data } = await axios.post(endpoint, dog);
@@ -77,65 +79,49 @@ export const createDog = (dog) => {
     }
   };
 };
-export const searchDogByName = (value) => {
-  return async (dispatch, getState) => {
-    try {
-      const lowerCaseName = value.toLowerCase();
-      const URL = `http://localhost:3001/dogs/name?name=${lowerCaseName}`;
-      const { myDogs } = getState();
+// export const searchDogByName = (name) => {
+//   return async (dispatch) => {
+//     try {
+//       const { data } = await axios.get(
+//         `${URL_API}/dogs/name?name=${lowerCaseName}`
+//       );
+//       console.log(data, esto es);
+//       dispatch({ type: SEARCH_DOG, payload: data });
+//     } catch (error) {
+//       console.error("Error al buscar el perro:", error);
+//     }
+//   };
+// };
 
-      let dogsToFilter;
+export const searchDogByName = (value) => async (dispatch, getState) => {
+  try {
+    const lowerCaseName = value.toLowerCase();
+    const URL = `${URL_API}/dogs/name?name=${lowerCaseName}`;
+    const { allDogs } = getState();
 
-      if (myDogs.length === 0) {
-        const error = "No hay perros para filtrar";
-        return error;
-      }
-
-      if (myDogs.length > 0) {
-        // Si ya hay resultados de GET_DOGS_BY_NAME, filtra esos resultados
-        dogsToFilter = myDogs;
-      } else {
-        // Si no hay resultados de GET_DOGS_BY_NAME, obtén todos los perros
-        const allDogs = await axios("http://localhost:3001/dogs");
-        dogsToFilter = allDogs.data;
-        console.log(dogsToFilter, "dogsToFilter");
-      }
-
-      // Filtra por nombre
-      const nameFilteredDogs = await axios(URL);
-      const filteredDogs = dogsToFilter.filter((dog) =>
-        nameFilteredDogs.data.some((filteredDog) => dog.id === filteredDog.id)
-      );
-
-      dispatch({ type: SEARCH_DOG, payload: nameFilteredDogs.data });
-      dispatch({ type: FILTER_DOGS_BYTEMP, payload: filteredDogs });
-    } catch (error) {
+    if (allDogs.length === 0) {
+      const error = "No hay perros para filtrar";
       console.log(error);
+      return;
     }
-  };
+    const nameFilteredDogs = await axios(URL);
+    const filteredDogs = allDogs.filter((dog) =>
+      nameFilteredDogs.data.some((filteredDog) => dog.id === filteredDog.id)
+    );
+
+    dispatch({ type: SEARCH_DOG, payload: filteredDogs });
+  } catch (error) {
+    console.error(error);
+  }
 };
+
 //? //////////////////////////////////////////////////////////////////////
 export const filterDogsbyTemperament = (temperament) => {
   return async (dispatch, getState) => {
     try {
-      const { myDogs } = getState();
+      const { allDogs } = getState();
 
-      let dogsToFilter;
-
-      if (myDogs.length === 0) {
-        const error = "No hay perros para filtrar";
-        return error;
-      }
-
-      if (myDogs.length > 0) {
-        dogsToFilter = myDogs;
-      } else {
-        const allDogs = await axios("http://localhost:3001/dogs");
-        dogsToFilter = allDogs.data;
-      }
-
-      // Filtra por temperamento
-      const filteredDogs = dogsToFilter.filter(
+      const filteredDogs = allDogs.filter(
         (dog) => dog.temperament && dog.temperament.includes(temperament)
       );
 

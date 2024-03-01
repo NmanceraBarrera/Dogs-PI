@@ -28,7 +28,7 @@ export default function Homepage({
   return (
     <div className={style.bg}>
       <Cards
-        myDogs={currentDogs}
+        myDogs={myDogs}
         onClick={onClick}
         allDogs={currentDogs}
         paginate={paginate}

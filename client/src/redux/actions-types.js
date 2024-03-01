@@ -8,5 +8,6 @@ export const FILTER_BY_APIDB = "FILTER_BY_APIDB";
 export const ORDER_BYWEIGTH = "ORDER_BYWEIGTH";
 export const SEARCH_DOG = "SEARCH_DOG";
 export const FILTER_DOGS_BYTEMP = "FILTER_DOGS_BYTEMP";
+export const DELETE_TEMPERAMENT = "DELETE_TEMPERAMENT";
 
 //? ////////////////////Actions-types////////////////////////////////////

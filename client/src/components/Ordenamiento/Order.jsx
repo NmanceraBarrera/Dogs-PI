@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
+import style from "./order.module.css";
 import {
   orderDog,
   orderDogByWeigth,
@@ -29,7 +30,11 @@ function Order() {
 
   return (
     <div>
-      <select value={orderType} onChange={handleOrderChange}>
+      <select
+        value={orderType}
+        onChange={handleOrderChange}
+        className={style.filtros}
+      >
         <option value="Alphabetic Order" placeholder="Alphabetic Order">
           Alphabetic Order
         </option>
@@ -37,12 +42,20 @@ function Order() {
         <option value="D">Descending</option>
       </select>
 
-      <select value={weigthOrderType} onChange={handleWeigthOrderChange}>
-        <option value="WEIGTH ⬇">Weight Descending</option>
-        <option value="WEIGTH ⬆">Weight Ascending</option>
+      <select
+        value={weigthOrderType}
+        onChange={handleWeigthOrderChange}
+        className={style.filtros}
+      >
+        <option value="WEIGHT ⬇">Weight Descending</option>
+        <option value="WEIGHT ⬆">Weight Ascending</option>
       </select>
 
-      <select value={apiDbFilter} onChange={handleApiDbFilterChange}>
+      <select
+        value={apiDbFilter}
+        onChange={handleApiDbFilterChange}
+        className={style.filtros}
+      >
         <option value="All">All</option>
         <option value="Api">Api</option>
         <option value="DB">Db</option>

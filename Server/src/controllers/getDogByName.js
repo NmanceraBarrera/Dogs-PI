@@ -7,7 +7,7 @@ const getDogByName = async (req, res) => {
   const name = req.query.name;
   const nameLowerCase = name.toLowerCase();
   const URL = `https://api.thedogapi.com/v1/breeds/search?q=${nameLowerCase}&api_key=${API_KEY}`;
-
+  let breeds;
   if (!nameLowerCase) {
     return res.status(400).json({ message: "nombre no existe" });
   }
@@ -20,10 +20,12 @@ const getDogByName = async (req, res) => {
       },
     });
     if (dogFromDb) {
+      breeds = dogFromDb;
+    } else {
+      const response = await axios.get(URL);
+      breeds = response.data;
     }
-    const response = await axios.get(URL);
 
-    breeds = response.data;
     res.json(breeds);
   } catch (error) {
     console.error("Error fetching dog breeds:", error.message);

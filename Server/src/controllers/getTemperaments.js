@@ -25,7 +25,7 @@ const getAllTemperaments = async (req, res) => {
 
     for (let i = 0; i < tFinal.length; i++) {
       await Temperament.findOrCreate({
-        where: { Name: tFinal[i] },
+        where: { name: tFinal[i] },
       });
     }
 

@@ -2,14 +2,13 @@
 
 .Card {
   height: auto;
+  width: 900px;
   padding: 20px;
   background-color: #fff;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
   display: flex;
-  position: absolute;
-  top: 301px;
-  left: 692px;
+
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -45,6 +44,7 @@
   border-radius: 5px;
   border: none;
   border-bottom: 2px solid #ccc;
+  outline: none;
 }
 
 .temperamento {
@@ -54,22 +54,6 @@
   align-items: center;
   width: 99%;
   border: none;
-}
-
-.submitButton {
-  width: 100%;
-  padding: 10px;
-  background-color: #cc99a7;
-  color: black;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 16px;
-  font-weight: bolder;
-}
-
-.submitButton:hover {
-  background-color: #ee7b96;
 }
 
 .option {
@@ -82,6 +66,7 @@
   align-content: center;
   justify-content: flex-end;
   border: none;
+  outline: none;
 }
 
 .weight {
@@ -90,6 +75,7 @@
   gap: 13px;
   border: none;
   width: 100%;
+  outline: none;
 }
 .height {
   display: flex;
@@ -97,6 +83,7 @@
   gap: 13px;
   border: none;
   width: 100%;
+  outline: none;
 }
 .lifeSpan {
   display: flex;
@@ -104,6 +91,7 @@
   gap: 13px;
   border: none;
   width: 100%;
+  outline: none;
 }
 .temp {
   display: flex;
@@ -112,6 +100,7 @@
   flex-direction: column;
   width: 427px;
   border: none;
+  outline: none;
 }
 .nameBreed {
   display: flex;
@@ -119,4 +108,72 @@
   gap: 14px;
   width: 100%;
   border: none;
+  outline: none;
+}
+
+.bg {
+  background-color: #f7f5f5;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-content: center;
+  align-items: center;
+  position: relative;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.submitButton {
+  background-color: #000000;
+  color: #ffffff;
+  border: none;
+  width: 100%;
+  padding: 10px 15px;
+  cursor: pointer;
+  border-radius: 5px;
+  margin-right: 10px;
+  text-decoration: none;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.submitButton:hover {
+  background-color: #ee6484;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+  transition: background-color 0.2s ease-in-out;
+}
+
+.goBack {
+  background-color: #000000;
+  color: #ffffff;
+  border: none;
+  padding: 10px 15px;
+  cursor: pointer;
+  border-radius: 5px;
+  margin-right: 10px;
+  text-decoration: none;
+  margin-top: 10px;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.goBack:hover {
+  background-color: #ee6484;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+  transition: background-color 0.2s ease-in-out;
+}
+
+.sonrisa {
+  width: auto;
+  height: 244px;
+}
+
+.previewImage {
+  max-width: 100%;
+  max-height: 200px; /* Puedes ajustar la altura según tus necesidades */
+  margin-top: 10px;
+}
+
+.error {
+  font-size: 12px;
+  margin: 0;
+  color: #ee6484;
 }

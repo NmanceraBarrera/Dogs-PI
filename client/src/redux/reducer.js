@@ -7,6 +7,7 @@ import {
   ORDER_BYWEIGTH,
   SEARCH_DOG,
   FILTER_DOGS_BYTEMP,
+  DELETE_TEMPERAMENT,
 } from "./actions-types";
 
 const initialState = {
@@ -33,28 +34,17 @@ const reducer = (state = initialState, { type, payload }) => {
       };
     //! ////////////////////////////////////////////////////////////////////////
 
-    case FILTER_DOG:
-      // if (payload === "Select Temperament...") {
+    case FILTER_DOG: //? ///// lo uso para traer los temperamentos
       return {
         ...state,
         searchTemperaments: payload,
       };
-    // } else {
-    //   const filteredDogs = state.allDogs.filter((dog) => {
-    //     return dog.temperament && dog.temperament.includes(payload);
-    //   });
 
-    //   return {
-    //     ...state,
-    //     myDogs: filteredDogs,
-
-    //   };
-    // }
     //! /////////////////////////////////////////////////////////////////////
     case SEARCH_DOG: //? ///// lo uso para searchdogbyname
       return {
         ...state,
-        searchDogName: payload,
+        myDogs: payload,
       };
 
     //! ///////////////////////////////////////////////////////////////////////
@@ -69,6 +59,7 @@ const reducer = (state = initialState, { type, payload }) => {
         const filteredApi = state.allDogs.filter(
           (dog) => typeof dog.id === "number"
         );
+        console.log(filteredApi, "asdasdasdasdasd");
         return {
           ...state,
           myDogs: filteredApi,
@@ -101,18 +92,38 @@ const reducer = (state = initialState, { type, payload }) => {
         myDogs: orderCopy,
       };
 
+    //? //////////////////////////////////////////
     case ORDER_BYWEIGTH:
-      const orderCopyWeigth = [...state.myDogs];
-      if (payload === "WEIGTH ⬇") {
-        orderCopyWeigth.sort((a, b) => b.weight - a.weight);
-      }
-      if (payload === "WEIGTH ⬆") {
-        orderCopyWeigth.sort((a, b) => a.weight - b.weight);
-      }
+      const orderCopyWeight = [...state.myDogs];
+
+      orderCopyWeight.sort((a, b) => {
+        const parseWeight = (weightString) => {
+          if (!weightString) {
+            return [0, 0];
+          }
+          const parts = weightString.split(/[\s-]+/);
+          const num1 = parseInt(parts[0]) || 0;
+          const num2 = parseInt(parts[1]) || 0;
+          return [num1, num2];
+        };
+
+        const weightA = parseWeight(a.weight);
+        const weightB = parseWeight(b.weight);
+
+        if (weightA[0] !== weightB[0]) {
+          return payload === "WEIGHT ⬇"
+            ? weightB[0] - weightA[0]
+            : weightA[0] - weightB[0];
+        }
+
+        return payload === "WEIGHT ⬇"
+          ? weightB[1] - weightA[1]
+          : weightA[1] - weightB[1];
+      });
 
       return {
         ...state,
-        myDogs: orderCopyWeigth,
+        myDogs: orderCopyWeight,
       };
 
     //? ///////////////////////////////////////////////
@@ -120,7 +131,6 @@ const reducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         myDogs: payload,
-        allDogs: payload,
       };
 
     //? ////////////////////////////////////////////////

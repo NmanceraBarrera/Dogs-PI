@@ -3,15 +3,17 @@ import { Navigate, useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import style from "./detail.module.css";
 import { TiArrowBack } from "react-icons/ti";
+const URL_API = import.meta.env.VITE_URL_API;
 
 export default function Detail(props) {
   const { id } = useParams();
   const [dog, setDog] = useState({});
   const navigate = useNavigate();
   useEffect(() => {
-    axios(`http://localhost:3001/dogs/${id}`).then(({ data }) => {
+    axios(`${URL_API}/dogs/${id}`).then(({ data }) => {
       if (data.name) {
         setDog(data);
+        console.log(dog, "este es dog");
       } else {
         window.alert("No hay personajes con ese ID");
       }
@@ -22,7 +24,7 @@ export default function Detail(props) {
   function onBack() {
     navigate("/home");
   }
-
+  console.log(dog, "este es dog");
   return (
     <div className={style.bg}>
       <button onClick={onBack} className={style.back}>

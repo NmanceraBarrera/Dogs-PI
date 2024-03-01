@@ -20,6 +20,7 @@ function App() {
   const myDogs = useSelector((state) => state.myDogs);
   const allDogs = useSelector((state) => state.searchDogName);
   const temps = useSelector((state) => state.searchTemperaments); //? => llamo el estado Global searchTemperaments
+  console.log(temps, "xsd");
 
   const navigate = useNavigate();
 
@@ -36,7 +37,7 @@ function App() {
 
   useEffect(() => {
     dispatch(getAllDogsAction()); //! ACA LLAMO LOS CANCHOSOS
-    dispatch(filterDog());
+    dispatch(filterDog()); //! ACA LLAMO LOS TEMPERAMENTOS
   }, []);
 
   const filterDogsByTemp = (dogTemp) => {
@@ -73,7 +74,13 @@ function App() {
         {/* <Route path="/dogs/name" element={<Filterbyname {...myDogs} />} /> */}
         <Route
           path="/createdog"
-          element={<FormCreate onClickCreate={onClickCreate} temps={temps} />}
+          element={
+            <FormCreate
+              onClickCreate={onClickCreate}
+              temps={temps}
+              myDogs={myDogs}
+            />
+          }
         />
       </Routes>
     </React.Fragment>

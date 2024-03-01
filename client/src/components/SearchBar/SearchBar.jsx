@@ -1,34 +1,25 @@
-// SearchBar.jsx
 import React, { useEffect, useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import style from "./serchbar.module.css";
+import { searchDogByName } from "../../redux/action";
+import { useDispatch } from "react-redux";
 
 function SearchBar({ onSearch }) {
+  const dispatch = useDispatch();
   const [searchResults, setSearchResults] = useState("");
   const searchTrim = searchResults.trim();
 
   const onSubmit = (event) => {
     event.preventDefault();
     if (searchTrim === "") {
-      window.alert("Ingrese un valor a input");
+      window.alert("Ingrese un valor al input");
     } else {
       onSearch(searchTrim);
     }
   };
 
-  // useEffect(() => {
-  //   if (searchTrim !== "") {
-  //     onSearch(searchTrim);
-  //   }
-  // }, [searchTrim, onSearch]);
-
-  const handleChange = (event) => {
-    const { value } = event.target;
-    setSearchResults(value);
-    if (value === "") {
-      // Si el valor es vacío, restaurar el estado inicial
-      onSearch(""); // Puedes ajustar el valor pasado según tus necesidades
-    }
+  const handleSearch = () => {
+    dispatch(searchDogByName(searchTrim));
   };
 
   return (
@@ -37,11 +28,10 @@ function SearchBar({ onSearch }) {
         <input
           className={style.input}
           value={searchResults}
-          onChange={handleChange}
+          onChange={(e) => setSearchResults(e.target.value)}
           placeholder="Buscar perro"
         />
-
-        <button className={style.search} type="submit">
+        <button className={style.search} type="submit" onClick={handleSearch}>
           <FaSearch />
         </button>
       </form>
