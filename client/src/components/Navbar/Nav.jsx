@@ -9,7 +9,9 @@ function Nav({ myDogs, onSearch, temps, filterDogsByTemp }) {
   return (
     <div className={style.nav}>
       <img
-        src={"../src/assets/perritoacostado.png"}
+        src={
+          "https://res.cloudinary.com/dzpqgjczu/image/upload/v1709333874/nvedsrxu1tddyl1k6wq3.png"
+        }
         alt="Perritoacostado"
         className={style.img}
       />

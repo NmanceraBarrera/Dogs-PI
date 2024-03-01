@@ -98,7 +98,7 @@ function FormCreate({ temps, myDogs }) {
   return (
     <div className={style.bg}>
       <img
-        src="./src/assets/sonrisa.png"
+        src="https://res.cloudinary.com/dzpqgjczu/image/upload/v1709333874/cgqakbvm6i3qor45jcbq.png"
         alt="sonrisa"
         className={style.sonrisa}
       />
