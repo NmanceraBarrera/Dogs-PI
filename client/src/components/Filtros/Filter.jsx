@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import style from "./filter.module.css";
+import style from "./Filter.module.css";
 import axios from "axios";
 
 function Filter({ temps, filterDogsByTemp }) {
