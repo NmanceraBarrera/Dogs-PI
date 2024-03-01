@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useEffect } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
-import LandingPage from "./components/landingPage/landingPage";
+import LandingPage from "./components/landingPage/LandingPage";
 import Homepage from "./components/homePage/Homepage";
 import { useDispatch, useSelector } from "react-redux";
 import {
